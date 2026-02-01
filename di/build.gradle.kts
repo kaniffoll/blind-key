@@ -11,6 +11,7 @@ kotlin {
             implementation(libs.koin.core)
             implementation(project(":domain"))
             implementation(project(":data"))
+            implementation(libs.androidx.room.runtime)
         }
     }
 }

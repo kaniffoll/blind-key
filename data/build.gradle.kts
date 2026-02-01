@@ -1,10 +1,12 @@
 plugins {
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.serialization)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.androidx.room)
 }
 
 kotlin {
-    jvm()
+    jvm("desktop")
 
     sourceSets {
         commonMain.dependencies {
@@ -12,6 +14,16 @@ kotlin {
             implementation(libs.firebase.firestore)
             implementation(project(":domain"))
             implementation(libs.kotlinx.serialization)
+            implementation(libs.androidx.room.runtime)
+            implementation(libs.androidx.sqlite.bundled)
         }
     }
+}
+
+dependencies {
+    add("kspDesktop", libs.androidx.room.compiler)
+}
+
+room {
+    schemaDirectory("$projectDir/schemas")
 }

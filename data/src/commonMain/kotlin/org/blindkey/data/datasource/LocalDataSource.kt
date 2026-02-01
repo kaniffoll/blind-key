@@ -1,4 +1,6 @@
 package org.blindkey.data.datasource
 
-class LocalDataSource {
+import org.blindkey.data.local.TextDao
+
+class LocalDataSource(private val dao: TextDao) {
 }
