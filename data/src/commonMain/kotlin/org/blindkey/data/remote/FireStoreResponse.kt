@@ -1,7 +1,9 @@
 package org.blindkey.data.remote
 
-data class TextDto(
-    val documentId: String,
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class FireStoreResponse(
     val content: String,
     val hasPunctuation: Boolean,
     val language: String,

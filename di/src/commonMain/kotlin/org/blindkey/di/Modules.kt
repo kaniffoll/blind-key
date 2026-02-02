@@ -13,6 +13,7 @@ import org.blindkey.data.local.getDatabaseBuilder
 import org.blindkey.data.local.getRoomDatabase
 import org.blindkey.domain.repo.TextRepository
 import org.blindkey.domain.usecase.GetRandomTextUseCase
+import org.blindkey.domain.usecase.InitDatabaseUseCase
 import org.koin.dsl.module
 
 private val dataModule = module {
@@ -33,5 +34,6 @@ private val repoModule = module {
 
 val useCaseModule = module {
     includes(repoModule)
+    factory<InitDatabaseUseCase> { InitDatabaseUseCase(get()) }
     factory<GetRandomTextUseCase> { GetRandomTextUseCase(get()) }
 }

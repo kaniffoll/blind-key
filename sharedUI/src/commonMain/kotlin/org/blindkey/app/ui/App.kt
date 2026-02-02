@@ -1,8 +1,12 @@
 package org.blindkey.app.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -30,16 +34,28 @@ fun App(
     val focusRequester = FocusRequester()
     //val logger = Logger.withTag("App")
 
-    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ) {
         LessonText(currentText, typedKeyList) {
             focusRequester.requestFocus()
+        }
+        Button(onClick = { viewModel.updateLocalData() }) {
+            Text("Update")
+        }
+        Button(onClick = { viewModel.getNewText() }) {
+            Text("Get new text")
         }
     }
 
     TextField(
         value = "",
         onValueChange = {
-            viewModel.checkKey(it.last())
+            if (it.isNotEmpty()) {
+                viewModel.checkKey(it.last())
+            }
         },
         modifier = Modifier.size(0.dp).focusRequester(focusRequester),
     )

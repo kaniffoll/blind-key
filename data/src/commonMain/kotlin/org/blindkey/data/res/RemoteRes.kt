@@ -1,6 +1,6 @@
 package org.blindkey.data.res
 
-object FireStoreRes {
+object RemoteRes {
     const val COLLECTION_NAME = "texts"
     const val RANDOM_FIELD_NAME = "random"
 }

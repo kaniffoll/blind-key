@@ -7,10 +7,13 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import org.blindkey.app.model.Key
-import org.blindkey.app.res.SomeStringResources.PLACEHOLDER_STRING
 import org.blindkey.domain.usecase.GetRandomTextUseCase
+import org.blindkey.domain.usecase.InitDatabaseUseCase
 
-class AppViewModel(useCase: GetRandomTextUseCase) : ViewModel() {
+class AppViewModel(
+    private val getRandomTextUseCase: GetRandomTextUseCase,
+    private val initDatabaseUseCase: InitDatabaseUseCase,
+) : ViewModel() {
     private var _currentText = MutableStateFlow("")
     val currentText = _currentText.asStateFlow()
 
@@ -29,7 +32,20 @@ class AppViewModel(useCase: GetRandomTextUseCase) : ViewModel() {
 
     init {
         viewModelScope.launch(Dispatchers.Default) {
-            _currentText.value = useCase().content
+            initDatabaseUseCase()
+            getNewText()
+        }
+    }
+
+    fun updateLocalData() {
+        viewModelScope.launch(Dispatchers.Default) {
+            initDatabaseUseCase(true)
+        }
+    }
+
+    fun getNewText() {
+        viewModelScope.launch(Dispatchers.Default) {
+            _currentText.value = getRandomTextUseCase().content
         }
     }
 
