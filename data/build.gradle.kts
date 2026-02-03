@@ -16,6 +16,8 @@ kotlin {
             implementation(libs.kotlinx.serialization)
             implementation(libs.androidx.room.runtime)
             implementation(libs.androidx.sqlite.bundled)
+            implementation(libs.datastore)
+            implementation(libs.datastore.preferences)
         }
     }
 }

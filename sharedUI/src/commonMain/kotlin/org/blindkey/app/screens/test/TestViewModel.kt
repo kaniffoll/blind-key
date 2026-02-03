@@ -1,4 +1,4 @@
-package org.blindkey.app.ui
+package org.blindkey.app.screens.test
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,7 +10,7 @@ import org.blindkey.app.model.Key
 import org.blindkey.domain.usecase.GetRandomTextUseCase
 import org.blindkey.domain.usecase.InitDatabaseUseCase
 
-class AppViewModel(
+class TestViewModel(
     private val getRandomTextUseCase: GetRandomTextUseCase,
     private val initDatabaseUseCase: InitDatabaseUseCase,
 ) : ViewModel() {
@@ -35,6 +35,11 @@ class AppViewModel(
             initDatabaseUseCase()
             getNewText()
         }
+    }
+
+    fun resetTypedKeyList() {
+        _currentIndex.value = 0
+        _typedKeyList.value = emptyList()
     }
 
     fun updateLocalData() {

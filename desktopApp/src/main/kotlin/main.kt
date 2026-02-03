@@ -3,7 +3,7 @@ import androidx.compose.ui.window.Window
 import androidx.compose.ui.window.application
 import androidx.compose.ui.window.rememberWindowState
 import org.blindkey.app.di.initKoin
-import org.blindkey.app.ui.App
+import org.blindkey.app.screens.App
 import utils.initFireStore
 import java.awt.Dimension
 
