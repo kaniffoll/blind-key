@@ -30,18 +30,19 @@ fun NavigationRoot(modifier: Modifier = Modifier) {
         modifier = modifier,
         backStack = backStack,
         entryProvider = { key ->
-            when(key) {
+            when (key) {
                 is Route.Test -> {
                     NavEntry(key) {
                         Test {
-                            backStack.add(Route.Settings)
+                            backStack.add(it)
                         }
                     }
                 }
                 is Route.Settings -> {
                     NavEntry(key) {
                         Settings {
-                            backStack.removeLast()
+                            if (backStack.size > 1)
+                                backStack.removeLast()
                         }
                     }
                 }
