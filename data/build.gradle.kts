@@ -18,6 +18,7 @@ kotlin {
             implementation(libs.androidx.sqlite.bundled)
             implementation(libs.datastore)
             implementation(libs.datastore.preferences)
+            implementation(libs.kotlinx.coroutines.core)
         }
     }
 }

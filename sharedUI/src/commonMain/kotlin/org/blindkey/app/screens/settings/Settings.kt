@@ -8,14 +8,21 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.viewModelFactory
 import blind_key.sharedui.generated.resources.Res
 import blind_key.sharedui.generated.resources.arrow_back_24px
 import blind_key.sharedui.generated.resources.arrow_back_icon
+import org.blindkey.app.components.TextDropdownMenu
 import org.blindkey.app.components.TopBar
 import org.blindkey.app.model.IconInfo
+import org.blindkey.app.theme.LocalThemeIsDark
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun Settings(onBack: () -> Unit) {
+    val viewModel = koinViewModel<SettingsViewModel>()
+//    val themeState = LocalThemeIsDark.current
+
     TopBar(
         icons = arrayOf(
             IconInfo(
@@ -33,5 +40,11 @@ fun Settings(onBack: () -> Unit) {
         verticalArrangement = Arrangement.Center
     ) {
         Text("Settings")
+        TextDropdownMenu(initValue = "light", "light", "dark", "system") {
+            println(it)
+        }
+//        Button(onClick = { themeState.value = !themeState.value }) {
+//            Text("Change Theme")
+//        }
     }
 }
