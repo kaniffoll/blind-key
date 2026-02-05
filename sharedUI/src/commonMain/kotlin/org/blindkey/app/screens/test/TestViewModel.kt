@@ -42,12 +42,6 @@ class TestViewModel(
         _typedKeyList.value = emptyList()
     }
 
-    fun updateLocalData() {
-        viewModelScope.launch(Dispatchers.Default) {
-            initDatabaseUseCase(true)
-        }
-    }
-
     fun getNewText() {
         viewModelScope.launch(Dispatchers.Default) {
             _currentText.value = getRandomTextUseCase().content

@@ -6,4 +6,6 @@ import kotlinx.coroutines.flow.Flow
 interface AppSettings {
     val theme: Flow<ThemeParam>
     suspend fun setTheme(theme: ThemeParam)
+
+    suspend fun updateLocalData()
 }

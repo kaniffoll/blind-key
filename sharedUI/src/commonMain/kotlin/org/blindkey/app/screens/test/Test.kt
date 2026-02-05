@@ -3,6 +3,7 @@ package org.blindkey.app.screens.test
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
@@ -46,7 +47,9 @@ fun Test(navigateTo: (NavKey) -> Unit) {
         }
     }
 
-    TopBar(icons = arrayOf(
+    TopBar(
+        modifier = Modifier.padding(Dimens.medium),
+        icons = arrayOf(
         IconInfo(
             drawableResource = Res.drawable.settings_24px,
             stringResource = Res.string.settings_icon,
@@ -64,9 +67,6 @@ fun Test(navigateTo: (NavKey) -> Unit) {
     ) {
         LessonText(currentText, typedKeyList, isFocused) {
             focusRequester.requestFocus()
-        }
-        Button(onClick = { viewModel.updateLocalData() }) {
-            Text("Update")
         }
         Button(onClick = { viewModel.getNewText() }) {
             Text("Get new text")

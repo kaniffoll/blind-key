@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
@@ -21,7 +22,7 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TopBar(modifier: Modifier = Modifier, vararg icons: IconInfo, onClick: (NavKey?) -> Unit) {
-    Row(modifier = modifier.fillMaxHeight().padding(Dimens.medium), horizontalArrangement = Arrangement.SpaceBetween) {
+    Row(modifier = modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
         icons.forEach { icon ->
             Image(
                 painter = painterResource(

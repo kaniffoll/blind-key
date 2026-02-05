@@ -8,8 +8,8 @@ import dev.gitlive.firebase.firestore.FirebaseFirestore
 import dev.gitlive.firebase.firestore.firestore
 import org.blindkey.data.AppSettingsImpl
 import org.blindkey.data.TextRepositoryImpl
-import org.blindkey.data.datasource.LocalDataSource
-import org.blindkey.data.datasource.RemoteDataSource
+import org.blindkey.data.local.LocalDataSource
+import org.blindkey.data.remote.RemoteDataSource
 import org.blindkey.data.datastore.createDataStore
 import org.blindkey.data.local.TextDao
 import org.blindkey.data.local.TextsDatabase
@@ -37,7 +37,7 @@ private val dataModule = module {
 private val repoModule = module {
     includes(dataModule)
     single<TextRepository> { TextRepositoryImpl(get(), get()) }
-    single<AppSettings> { AppSettingsImpl(get()) }
+    single<AppSettings> { AppSettingsImpl(get(), get()) }
 }
 
 val useCaseModule = module {

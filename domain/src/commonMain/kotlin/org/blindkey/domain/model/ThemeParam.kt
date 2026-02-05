@@ -4,14 +4,22 @@ import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
 @Serializable
-sealed interface ThemeParam {
+sealed class ThemeParam {
     @Serializable
     @SerialName("light")
-    data object Light: ThemeParam
+    data object Light: ThemeParam()
     @Serializable
     @SerialName("dark")
-    data object Dark: ThemeParam
+    data object Dark: ThemeParam()
     @Serializable
     @SerialName("system")
-    data object System: ThemeParam
+    data object System: ThemeParam()
+
+    override fun toString(): String {
+        return when(this) {
+            Dark -> "dark"
+            Light -> "light"
+            System -> "system"
+        }
+    }
 }

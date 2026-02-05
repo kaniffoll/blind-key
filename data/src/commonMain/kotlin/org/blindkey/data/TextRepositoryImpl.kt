@@ -1,7 +1,7 @@
 package org.blindkey.data
 
-import org.blindkey.data.datasource.LocalDataSource
-import org.blindkey.data.datasource.RemoteDataSource
+import org.blindkey.data.local.LocalDataSource
+import org.blindkey.data.remote.RemoteDataSource
 import org.blindkey.data.remote.toEntity
 import org.blindkey.domain.model.Text
 import org.blindkey.domain.repo.TextRepository
@@ -25,7 +25,6 @@ class TextRepositoryImpl(
         if (!isInitialized.get()) {
             initDatabase()
         }
-        //return remoteDataSource.getRandomText()
         return localDataSource.getRandomText() ?: Text("NO CONTENT", false, "en", 10)
     }
 }

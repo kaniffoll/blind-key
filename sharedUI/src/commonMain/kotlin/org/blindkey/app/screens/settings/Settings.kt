@@ -1,50 +1,64 @@
 package org.blindkey.app.screens.settings
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.lifecycle.viewmodel.viewModelFactory
-import blind_key.sharedui.generated.resources.Res
-import blind_key.sharedui.generated.resources.arrow_back_24px
-import blind_key.sharedui.generated.resources.arrow_back_icon
+import androidx.compose.ui.text.style.TextAlign
+import blind_key.sharedui.generated.resources.*
 import org.blindkey.app.components.TextDropdownMenu
 import org.blindkey.app.components.TopBar
 import org.blindkey.app.model.IconInfo
-import org.blindkey.app.theme.LocalThemeIsDark
+import org.blindkey.app.res.Dimens
+import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun Settings(onBack: () -> Unit) {
     val viewModel = koinViewModel<SettingsViewModel>()
-//    val themeState = LocalThemeIsDark.current
-
-    TopBar(
-        icons = arrayOf(
-            IconInfo(
-                drawableResource = Res.drawable.arrow_back_24px,
-                stringResource = Res.string.arrow_back_icon,
-            )
-        )
-    ) {
-        onBack()
-    }
+    val theme by viewModel.theme.collectAsState()
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
+        modifier = Modifier.fillMaxSize().padding(Dimens.medium),
+        horizontalAlignment = Alignment.Start,
+        verticalArrangement = Arrangement.spacedBy(Dimens.small)
     ) {
-        Text("Settings")
-        TextDropdownMenu(initValue = "light", "light", "dark", "system") {
-            println(it)
+        TopBar(
+            icons = arrayOf(
+                IconInfo(
+                    drawableResource = Res.drawable.arrow_back_24px,
+                    stringResource = Res.string.arrow_back_icon,
+                )
+            )
+        ) {
+            onBack()
         }
-//        Button(onClick = { themeState.value = !themeState.value }) {
-//            Text("Change Theme")
-//        }
+
+        Text(
+            text = stringResource(Res.string.settings_title),
+            modifier = Modifier.fillMaxWidth(),
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.headlineLarge
+        )
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.small),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("${stringResource(Res.string.theme)}:")
+            TextDropdownMenu(initValue = theme.toString(), "light", "dark", "system") {
+                viewModel.changeTheme(it)
+            }
+        }
+
+        OutlinedButton(onClick = { viewModel.updateLocalData() }) {
+            Text(stringResource(Res.string.update_local))
+        }
     }
 }

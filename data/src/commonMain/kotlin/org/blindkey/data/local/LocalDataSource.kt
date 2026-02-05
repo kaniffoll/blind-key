@@ -1,11 +1,7 @@
-package org.blindkey.data.datasource
+package org.blindkey.data.local
 
 import androidx.room.RoomRawQuery
-import org.blindkey.data.local.TextDao
-import org.blindkey.data.local.TextEntity
-import org.blindkey.data.local.toText
-import org.blindkey.data.res.NumberRes.RANDOM_NUMBERS_RANGE_LOWER
-import org.blindkey.data.res.NumberRes.RANDOM_NUMBERS_RANGE_UPPER
+import org.blindkey.data.res.NumberRes
 import org.blindkey.domain.model.Text
 import kotlin.random.Random
 
@@ -28,7 +24,10 @@ class LocalDataSource(private val dao: TextDao) {
     }
 
     suspend fun getRandomText(): Text? {
-        val random = Random.nextDouble(RANDOM_NUMBERS_RANGE_LOWER, RANDOM_NUMBERS_RANGE_UPPER)
+        val random = Random.Default.nextDouble(
+            NumberRes.RANDOM_NUMBERS_RANGE_LOWER,
+            NumberRes.RANDOM_NUMBERS_RANGE_UPPER
+        )
         listOf("<=", ">").forEach { sign ->
             val query = RoomRawQuery(getRandomSqlQuery(sign)) {
                 it.bindDouble(1, random)
