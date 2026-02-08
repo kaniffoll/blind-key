@@ -9,4 +9,7 @@ sealed interface Route: NavKey {
     data object Settings: Route, NavKey
     @Serializable
     data object Test: Route, NavKey
+
+    @Serializable
+    data object Result: Route, NavKey
 }

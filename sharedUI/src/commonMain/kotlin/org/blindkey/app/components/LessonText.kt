@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.BlurredEdgeTreatment
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.draw.blur
-import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import org.blindkey.app.model.Key
 import org.blindkey.app.res.Dimens
@@ -34,20 +34,35 @@ fun LessonText(
             ),
         contentAlignment = Alignment.TopStart
     ) {
-        Text(text, color = MaterialTheme.colorScheme.tertiary, modifier = Modifier.alpha(0.5f))
 
-        Text(buildAnnotatedString {
-            typedKeyList.forEach {
-                when (it) {
-                    is Key.ErrNoted -> withStyle(SpanStyle(color = MaterialTheme.colorScheme.errorContainer)) {
-                        append(it.key.toString())
+        Text(
+            text,
+            color = MaterialTheme.colorScheme.tertiary,
+            modifier = Modifier.alpha(0.5f),
+            style = MaterialTheme.typography.bodyLarge
+        )
+
+        Text(
+            buildAnnotatedString {
+                typedKeyList.forEachIndexed { index, it ->
+                    val color = when (it) {
+                        is Key.ErrNoted -> MaterialTheme.colorScheme.error
+                        is Key.OkNoted -> MaterialTheme.colorScheme.primary
                     }
 
-                    is Key.OkNoted -> withStyle(SpanStyle(color = MaterialTheme.colorScheme.primary)) {
+                    val isLast = index == typedKeyList.size - 1
+
+                    val decoration = if (isLast) TextDecoration.Underline else TextDecoration.None
+
+                    withStyle(
+                        style = MaterialTheme.typography.bodyLarge.toSpanStyle()
+                            .copy(color = color, textDecoration = decoration)
+                    ) {
                         append(it.key.toString())
                     }
                 }
-            }
-        })
+            },
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }

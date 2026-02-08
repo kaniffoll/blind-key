@@ -8,9 +8,6 @@ import androidx.room.Upsert
 
 @Dao
 interface TextDao {
-//    @Query("SELECT * FROM texts WHERE random = :random LIMIT 1")
-//    suspend fun getRandomText(random: Double): TextEntity?
-
     @RawQuery
     suspend fun getRandomText(query: RoomRawQuery): TextEntity?
 

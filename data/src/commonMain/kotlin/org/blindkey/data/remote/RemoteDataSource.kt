@@ -11,4 +11,9 @@ class RemoteDataSource(private val db: FirebaseFirestore) {
             doc.data(FireStoreResponse.serializer()).toTextDto(doc.id)
         }
     }
+
+    suspend fun addNewText(text: HashMap<String, Any>) {
+        db.collection(RemoteRes.COLLECTION_NAME)
+            .add(text)
+    }
 }

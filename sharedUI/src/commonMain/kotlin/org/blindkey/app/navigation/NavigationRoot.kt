@@ -9,6 +9,7 @@ import androidx.navigation3.ui.NavDisplay
 import androidx.savedstate.serialization.SavedStateConfiguration
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
+import org.blindkey.app.screens.result.Result
 import org.blindkey.app.screens.settings.Settings
 import org.blindkey.app.screens.test.Test
 
@@ -20,6 +21,7 @@ fun NavigationRoot(modifier: Modifier = Modifier) {
                 polymorphic(NavKey::class) {
                     subclass(Route.Settings::class, Route.Settings.serializer())
                     subclass(Route.Test::class, Route.Test.serializer())
+                    subclass(Route.Result::class, Route.Result.serializer())
                 }
             }
         },
@@ -41,6 +43,14 @@ fun NavigationRoot(modifier: Modifier = Modifier) {
                 is Route.Settings -> {
                     NavEntry(key) {
                         Settings {
+                            if (backStack.size > 1)
+                                backStack.removeLast()
+                        }
+                    }
+                }
+                is Route.Result -> {
+                    NavEntry(key) {
+                        Result {
                             if (backStack.size > 1)
                                 backStack.removeLast()
                         }

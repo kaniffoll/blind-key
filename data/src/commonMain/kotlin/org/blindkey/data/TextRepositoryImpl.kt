@@ -6,6 +6,7 @@ import org.blindkey.data.remote.toEntity
 import org.blindkey.domain.model.Text
 import org.blindkey.domain.repo.TextRepository
 import androidx.room.concurrent.AtomicBoolean
+import org.blindkey.domain.model.TestParam
 
 class TextRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
@@ -21,10 +22,14 @@ class TextRepositoryImpl(
         }
     }
 
-    override suspend fun getRandomText(): Text {
+    override suspend fun getRandomText(testParam: TestParam): Text {
         if (!isInitialized.get()) {
             initDatabase()
         }
-        return localDataSource.getRandomText() ?: Text("NO CONTENT", false, "en", 10)
+        return localDataSource.getRandomText(testParam) ?: Text("NO CONTENT", false, "en", 10)
+    }
+
+    override suspend fun addText(text: HashMap<String, Any>) {
+        remoteDataSource.addNewText(text)
     }
 }
