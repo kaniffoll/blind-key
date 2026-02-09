@@ -19,8 +19,10 @@ import org.jetbrains.compose.resources.stringResource
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun Settings(onBack: () -> Unit) {
-    val viewModel = koinViewModel<SettingsViewModel>()
+fun Settings(
+    viewModel: SettingsViewModel = koinViewModel(),
+    onBack: () -> Unit
+) {
     val theme by viewModel.theme.collectAsState()
 
     Column(

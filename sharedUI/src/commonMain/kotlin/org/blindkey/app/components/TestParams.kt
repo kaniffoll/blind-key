@@ -62,7 +62,7 @@ fun TestParams(
 }
 
 @Composable
-fun LabelAndMenu(
+private fun LabelAndMenu(
     initValue: String,
     label: String,
     vararg params: String,

@@ -1,25 +1,23 @@
 package org.blindkey.app.screens.result
 
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import blind_key.sharedui.generated.resources.Res
-import blind_key.sharedui.generated.resources.arrow_back_24px
-import blind_key.sharedui.generated.resources.arrow_back_icon
-import org.blindkey.app.components.TopBar
-import org.blindkey.app.model.IconInfo
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import org.blindkey.app.screens.test.MainViewModel
 
 @Composable
-fun Result(onBack: () -> Unit) {
-    TopBar(
-        icons = arrayOf(
-            IconInfo(
-                drawableResource = Res.drawable.arrow_back_24px,
-                stringResource = Res.string.arrow_back_icon,
-            )
-        )
+fun Result(
+    viewModel: MainViewModel,
+    onBack: () -> Unit
+) {
+    val textParam = viewModel.getTestResult()
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-        onBack()
+        Text(textParam.totalTime.toString() + textParam.errorList.toString())
     }
-
-    Text("RESULT SCREEN")
 }

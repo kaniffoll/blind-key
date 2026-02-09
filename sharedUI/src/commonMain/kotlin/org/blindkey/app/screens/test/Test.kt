@@ -1,6 +1,8 @@
 package org.blindkey.app.screens.test
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
@@ -12,6 +14,7 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.zIndex
 import androidx.navigation3.runtime.NavKey
 import blind_key.sharedui.generated.resources.*
 import org.blindkey.app.components.LessonText
@@ -22,31 +25,86 @@ import org.blindkey.app.navigation.Route
 import org.blindkey.app.res.Dimens
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
-import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
-fun Test(navigateTo: (NavKey) -> Unit) {
-    val viewModel = koinViewModel<TestViewModel>()
-
-    val currentText by viewModel.currentText.collectAsState()
-    val typedKeyList by viewModel.typedKeyList.collectAsState()
+fun Test(
+    viewModel: MainViewModel,
+    navigateTo: (NavKey) -> Unit
+) {
     val focusRequester = FocusRequester()
     var isFocused by remember { mutableStateOf(false) }
     //val logger = Logger.withTag("App")
 
-    LaunchedEffect(viewModel.currentKey) {
-        if (viewModel.currentKey == null) {
-            navigateTo(Route.Result)
+    TopContent(viewModel = viewModel, navigateTo = navigateTo)
+
+    MainContent(viewModel = viewModel, focusRequester = focusRequester, isFocused = isFocused)
+
+    TextField(
+        value = "",
+        onValueChange = {
+            if (it.isNotEmpty()) {
+                viewModel.checkKey(it.last())
+            }
+        },
+        modifier = Modifier
+            .size(Dimens.zero)
+            .focusRequester(focusRequester)
+            .onFocusChanged {
+                isFocused = it.isFocused
+            },
+    )
+}
+
+@Composable
+private fun MainContent(
+    viewModel: MainViewModel,
+    focusRequester: FocusRequester,
+    isFocused: Boolean
+) {
+    val interactionSource = remember { MutableInteractionSource() }
+    val currentText by viewModel.currentText.collectAsState()
+    val typedKeyList by viewModel.typedKeyList.collectAsState()
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .zIndex(0f)
+            .clickable(
+                interactionSource = interactionSource,
+                indication = null
+            ) { viewModel.resetTypedKeyList() },
+        contentAlignment = Alignment.Center
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.Center
+        ) {
+            LessonText(currentText, typedKeyList, isFocused) {
+                focusRequester.requestFocus()
+            }
+            OutlinedButton(onClick = { viewModel.getNewText() }) {
+                Image(
+                    painterResource(Res.drawable.refresh_24px),
+                    stringResource(Res.string.refresh_icon),
+                    colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
+                )
+            }
+//        Button(onClick = { viewModel.addText() }) {}
+        }
+    }
+}
+
+@Composable
+private fun TopContent(viewModel: MainViewModel, navigateTo: (NavKey) -> Unit) {
+    val isTestFinished by viewModel.isTestFinished.collectAsState()
+
+    LaunchedEffect(isTestFinished) {
+        if (isTestFinished) {
+            navigateTo(Route.Main.Result)
         }
     }
 
-    LaunchedEffect(isFocused) {
-        if (!isFocused) {
-            viewModel.resetTypedKeyList()
-        }
-    }
-
-    Column(modifier = Modifier.fillMaxSize()) {
+    Column(modifier = Modifier.fillMaxWidth().zIndex(1f)) {
         TopBar(
             modifier = Modifier.padding(Dimens.medium),
             icons = arrayOf(
@@ -66,38 +124,4 @@ fun Test(navigateTo: (NavKey) -> Unit) {
             onLengthChange = { viewModel.changeLength(it) },
         )
     }
-
-    Column(
-        modifier = Modifier
-            .fillMaxSize(),
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center
-    ) {
-        LessonText(currentText, typedKeyList, isFocused) {
-            focusRequester.requestFocus()
-        }
-        OutlinedButton(onClick = { viewModel.getNewText() }) {
-           Image(
-               painterResource(Res.drawable.refresh_24px),
-               stringResource(Res.string.refresh_icon),
-               colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
-           )
-        }
-//        Button(onClick = { viewModel.addText() }) {}
-    }
-
-    TextField(
-        value = "",
-        onValueChange = {
-            if (it.isNotEmpty()) {
-                viewModel.checkKey(it.last())
-            }
-        },
-        modifier = Modifier
-            .size(Dimens.zero)
-            .focusRequester(focusRequester)
-            .onFocusChanged {
-                isFocused = it.isFocused
-            },
-    )
 }

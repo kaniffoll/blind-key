@@ -31,6 +31,7 @@ kotlin {
             implementation(libs.koin.compose.viewModel)
             implementation(libs.jetbrains.navigation3.ui)
             implementation(libs.kotlinx.serialization)
+            implementation(libs.jetbrains.navigation3.lifecyle.viewModel)
             implementation(project(":domain"))
             implementation(project(":di"))
         }
