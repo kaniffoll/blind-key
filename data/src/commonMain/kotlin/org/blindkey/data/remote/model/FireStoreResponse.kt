@@ -1,4 +1,4 @@
-package org.blindkey.data.remote
+package org.blindkey.data.remote.model
 
 import kotlinx.serialization.Serializable
 
@@ -8,5 +8,6 @@ data class FireStoreResponse(
     val hasPunctuation: Boolean,
     val language: String,
     val length: Int,
-    val random: Double
+    val random: Double,
+    val wordsCount: Int
 )

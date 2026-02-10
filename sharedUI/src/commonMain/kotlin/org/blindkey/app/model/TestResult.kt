@@ -1,6 +1,6 @@
 package org.blindkey.app.model
 
 data class TestResult(
-    val totalTime: Long? = null,
+    val wpm: Int,
     val errorList: List<Int>
 )

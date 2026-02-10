@@ -1,14 +1,8 @@
 package org.blindkey.data.remote
 
-import org.blindkey.data.local.TextEntity
-import org.blindkey.domain.model.Text
-
-fun FireStoreResponse.toText() = Text(
-    content,
-    hasPunctuation,
-    language,
-    length
-)
+import org.blindkey.data.local.model.TextEntity
+import org.blindkey.data.remote.model.FireStoreResponse
+import org.blindkey.data.remote.model.TextDto
 
 fun FireStoreResponse.toTextDto(documentId: String) = TextDto(
     documentId = documentId,
@@ -16,7 +10,8 @@ fun FireStoreResponse.toTextDto(documentId: String) = TextDto(
     hasPunctuation = hasPunctuation,
     language = language,
     length = length,
-    random = random
+    random = random,
+    wordsCount = wordsCount,
 )
 
 fun TextDto.toEntity() = TextEntity(
@@ -25,5 +20,6 @@ fun TextDto.toEntity() = TextEntity(
     hasPunctuation = hasPunctuation,
     language = language,
     length = length,
-    random = random
+    random = random,
+    wordsCount = wordsCount,
 )

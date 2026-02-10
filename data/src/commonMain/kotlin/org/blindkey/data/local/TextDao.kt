@@ -5,6 +5,7 @@ import androidx.room.Query
 import androidx.room.RawQuery
 import androidx.room.RoomRawQuery
 import androidx.room.Upsert
+import org.blindkey.data.local.model.TextEntity
 
 @Dao
 interface TextDao {

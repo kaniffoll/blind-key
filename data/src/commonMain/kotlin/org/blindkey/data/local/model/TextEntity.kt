@@ -1,4 +1,4 @@
-package org.blindkey.data.local
+package org.blindkey.data.local.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -13,5 +13,6 @@ data class TextEntity(
     val hasPunctuation: Boolean,
     val language: String,
     val length: Int,
-    val random: Double
+    val random: Double,
+    val wordsCount: Int,
 )

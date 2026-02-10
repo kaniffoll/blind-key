@@ -6,13 +6,9 @@ import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.zIndex
 import androidx.navigation3.runtime.NavKey
@@ -31,36 +27,13 @@ fun Test(
     viewModel: MainViewModel,
     navigateTo: (NavKey) -> Unit
 ) {
-    val focusRequester = FocusRequester()
-    var isFocused by remember { mutableStateOf(false) }
-    //val logger = Logger.withTag("App")
-
     TopContent(viewModel = viewModel, navigateTo = navigateTo)
-
-    MainContent(viewModel = viewModel, focusRequester = focusRequester, isFocused = isFocused)
-
-    TextField(
-        value = "",
-        onValueChange = {
-            if (it.isNotEmpty()) {
-                viewModel.checkKey(it.last())
-            }
-        },
-        modifier = Modifier
-            .size(Dimens.zero)
-            .focusRequester(focusRequester)
-            .onFocusChanged {
-                isFocused = it.isFocused
-            },
-    )
+    MainContent(viewModel = viewModel)
 }
 
+
 @Composable
-private fun MainContent(
-    viewModel: MainViewModel,
-    focusRequester: FocusRequester,
-    isFocused: Boolean
-) {
+private fun MainContent(viewModel: MainViewModel) {
     val interactionSource = remember { MutableInteractionSource() }
     val currentText by viewModel.currentText.collectAsState()
     val typedKeyList by viewModel.typedKeyList.collectAsState()
@@ -79,8 +52,8 @@ private fun MainContent(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            LessonText(currentText, typedKeyList, isFocused) {
-                focusRequester.requestFocus()
+            LessonText(currentText.content, typedKeyList) { key ->
+                viewModel.checkKey(key)
             }
             OutlinedButton(onClick = { viewModel.getNewText() }) {
                 Image(

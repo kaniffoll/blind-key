@@ -10,4 +10,8 @@ object Dimens {
     val large = 24.dp
     val iconSize = 32.dp
     val borderStroke = 1.dp
+
+    val largeErrColumn = 60.dp
+    val mediumErrColumn = 40.dp
+    val smallErrColumn = 20.dp
 }

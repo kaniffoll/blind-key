@@ -5,6 +5,7 @@ import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
+import org.blindkey.data.local.model.TextEntity
 import org.blindkey.data.res.RoomRes
 
 @Database(

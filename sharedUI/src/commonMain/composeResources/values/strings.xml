@@ -15,4 +15,5 @@
     <string name="refresh_icon">Refresh Icon</string>
     <string name="settings_icon">Settings Icon</string>
     <string name="arrow_back_icon">Arrow back Icon</string>
+    <string name="arrow_forward_icon">Arrow forward Icon</string>
 </resources>

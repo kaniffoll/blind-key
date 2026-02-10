@@ -9,6 +9,7 @@ import kotlinx.coroutines.launch
 import org.blindkey.app.model.Key
 import org.blindkey.app.model.TestResult
 import org.blindkey.domain.model.TestParam
+import org.blindkey.domain.model.Text
 import org.blindkey.domain.usecase.AddTextUseCase
 import org.blindkey.domain.usecase.GetRandomTextUseCase
 import org.blindkey.domain.usecase.InitDatabaseUseCase
@@ -20,25 +21,19 @@ class MainViewModel(
     private val addTextUseCase: AddTextUseCase,
 ) : ViewModel() {
     //private val logger = Logger.withTag("TestViewModel")
-    private var _currentText = MutableStateFlow("")
+    private var _currentText = MutableStateFlow(Text("", 0))
     val currentText = _currentText.asStateFlow()
     private var _isTestFinished = MutableStateFlow(false)
     val isTestFinished = _isTestFinished.asStateFlow()
     private var currentIndex = 0
     private var _typedKeyList = MutableStateFlow(emptyList<Key>())
     val typedKeyList = _typedKeyList.asStateFlow()
-    val currentKey: Char?
-        get() = if (currentIndex == _currentText.value.count()) {
-            _isTestFinished.value = true
-            endTest()
-            null
-        }
-        else _currentText.value[currentIndex]
+    val currentKey: Char
+        get() = _currentText.value.content[currentIndex]
     private var testParam = TestParam()
     private var isErrForCurrentKey = false
     private lateinit var errList: MutableList<Int>
     private var startTime: Long? = null
-    private var endTime: Long? = null
     private var totalTime: Long? = null
 
     init {
@@ -49,11 +44,14 @@ class MainViewModel(
     }
 
     private fun endTest() {
-        endTime = System.currentTimeMillis()
-        totalTime = startTime?.let { sT -> endTime?.let { et -> et - sT } }
+        val endTime = System.currentTimeMillis()
+        totalTime = startTime?.let { endTime - it }
     }
 
-    fun getTestResult(): TestResult = TestResult(totalTime, errList)
+    fun getTestResult(): TestResult {
+        val wpm = (_currentText.value.wordsCount / totalTimeAsMinutes()).toInt()
+        return TestResult(wpm, errList)
+    }
 
     fun changeHasPunctuation(hasPunctuationAsString: String) {
         testParam = testParam.copy(hasPunctuation = TestParam.getHasPunctuationByStringValue(hasPunctuationAsString))
@@ -74,36 +72,39 @@ class MainViewModel(
         currentIndex = 0
         _typedKeyList.value = emptyList()
         startTime = null
-        endTime = null
         totalTime = null
-        errList = MutableList(_currentText.value.count()) { 0 }
+        _isTestFinished.value = false
+        errList = MutableList(_currentText.value.content.count()) { 0 }
     }
 
     fun getNewText() {
         viewModelScope.launch(Dispatchers.Default) {
             _isTestFinished.value = false
-            _currentText.value = getRandomTextUseCase(testParam).content
+            _currentText.value = getRandomTextUseCase(testParam)
             resetTypedKeyList()
         }
     }
 
     fun checkKey(key: Char) {
-        if (startTime == null) {
-            startTime = System.currentTimeMillis()
-        }
-
-        currentKey ?: return
+        startTime ?: run { startTime = System.currentTimeMillis() }
 
         if (key == currentKey) {
             val newKey = if (isErrForCurrentKey) Key.ErrNoted(key) else Key.OkNoted(key)
             _typedKeyList.value = _typedKeyList.value.toMutableList().apply { add(newKey) }
             isErrForCurrentKey = false
             currentIndex += 1
+
+            if (currentIndex == _currentText.value.content.count() - 1) {
+                _isTestFinished.value = true
+                endTest()
+            }
             return
         }
         isErrForCurrentKey = true
         errList[currentIndex]++
     }
+
+    private fun totalTimeAsMinutes(): Double = totalTime!! / 60000.0
 
 //    fun addText() {
 //        viewModelScope.launch(Dispatchers.Default) {

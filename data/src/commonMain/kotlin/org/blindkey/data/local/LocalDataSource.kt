@@ -1,7 +1,7 @@
 package org.blindkey.data.local
 
 import androidx.room.RoomRawQuery
-import org.blindkey.data.remote.TextDto
+import org.blindkey.data.local.model.TextEntity
 import org.blindkey.data.res.NumberRes
 import org.blindkey.domain.model.TestParam
 import org.blindkey.domain.model.Text

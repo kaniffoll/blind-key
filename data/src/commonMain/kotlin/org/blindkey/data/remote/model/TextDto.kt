@@ -1,4 +1,4 @@
-package org.blindkey.data.remote
+package org.blindkey.data.remote.model
 
 data class TextDto(
     val documentId: String,
@@ -6,5 +6,6 @@ data class TextDto(
     val hasPunctuation: Boolean,
     val language: String,
     val length: Int,
-    val random: Double
+    val random: Double,
+    val wordsCount: Int
 )

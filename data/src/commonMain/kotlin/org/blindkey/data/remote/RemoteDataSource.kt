@@ -1,6 +1,8 @@
 package org.blindkey.data.remote
 
 import dev.gitlive.firebase.firestore.FirebaseFirestore
+import org.blindkey.data.remote.model.FireStoreResponse
+import org.blindkey.data.remote.model.TextDto
 import org.blindkey.data.res.RemoteRes
 
 class RemoteDataSource(private val db: FirebaseFirestore) {
