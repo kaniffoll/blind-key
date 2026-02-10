@@ -25,9 +25,9 @@ fun TextDropdownMenu(initValue: String, vararg params: String, onItemSelect: (St
             Modifier.border(
                 Dimens.borderStroke,
                 MaterialTheme.colorScheme.secondary.copy(alpha = 0.5f),
-                shape = RoundedCornerShape(Dimens.small)
+                shape = RoundedCornerShape(Dimens.small2)
             )
-                .padding(vertical = Dimens.dropDownTextPadding, horizontal = Dimens.small),
+                .padding(vertical = Dimens.dropDownTextPadding, horizontal = Dimens.small2),
             contentAlignment = Alignment.Center
         ) {
             Text(text = selectedValue.lowercase(), modifier = Modifier.clickable { expanded = !expanded })

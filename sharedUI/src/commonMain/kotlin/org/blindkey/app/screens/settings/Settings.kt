@@ -28,7 +28,7 @@ fun Settings(
     Column(
         modifier = Modifier.fillMaxSize().padding(Dimens.medium),
         horizontalAlignment = Alignment.Start,
-        verticalArrangement = Arrangement.spacedBy(Dimens.small)
+        verticalArrangement = Arrangement.spacedBy(Dimens.small2)
     ) {
         TopBar(
             icons = arrayOf(
@@ -50,7 +50,7 @@ fun Settings(
 
         Row(
             modifier = Modifier.fillMaxWidth(),
-            horizontalArrangement = Arrangement.spacedBy(Dimens.small),
+            horizontalArrangement = Arrangement.spacedBy(Dimens.small2),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Text("${stringResource(Res.string.theme)}:")

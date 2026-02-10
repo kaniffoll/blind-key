@@ -70,7 +70,7 @@ private fun LabelAndMenu(
 ) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.spacedBy(Dimens.small)
+        horizontalArrangement = Arrangement.spacedBy(Dimens.small2)
     ) {
         Text(label)
         TextDropdownMenu(initValue, *params) {

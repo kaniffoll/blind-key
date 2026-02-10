@@ -2,10 +2,12 @@ package org.blindkey.app.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.focusable
+import androidx.compose.foundation.indication
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.material.Text
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -29,7 +31,6 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.withStyle
 import org.blindkey.app.model.Key
 import org.blindkey.app.res.Dimens
-import org.blindkey.app.screens.test.MainViewModel
 
 @Composable
 fun LessonText(
@@ -39,13 +40,14 @@ fun LessonText(
 ) {
     var isFocused by remember { mutableStateOf(false) }
     val focusRequester = remember { FocusRequester() }
+    val interactionSource = remember { MutableInteractionSource() }
 
     Box(
         modifier = Modifier
             .focusable()
             .onFocusChanged { isFocused = it.isFocused }
             .focusRequester(focusRequester)
-            .clickable { focusRequester.requestFocus() }
+            .clickable(interactionSource, null) { focusRequester.requestFocus() }
             .padding(Dimens.large)
             .onKeyEvent { event ->
                 if (event.type == KeyEventType.KeyDown) {
@@ -56,7 +58,7 @@ fun LessonText(
                 true
             }
             .blur(
-                radius = if (isFocused) Dimens.zero else Dimens.small,
+                radius = if (isFocused) Dimens.zero else Dimens.small2,
                 edgeTreatment = BlurredEdgeTreatment.Unbounded,
             ),
         contentAlignment = Alignment.TopStart
