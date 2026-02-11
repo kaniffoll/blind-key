@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import blind_key.sharedui.generated.resources.*
 import org.blindkey.app.components.ErrorGraph
+import org.blindkey.app.model.TestResult
 import org.blindkey.app.res.Dimens
 import org.blindkey.app.screens.test.MainViewModel
 import org.jetbrains.compose.resources.painterResource
@@ -22,16 +23,20 @@ fun Result(
     viewModel: MainViewModel,
     onBack: () -> Unit
 ) {
-    val textParam = viewModel.getTestResult()
+    val testResult = viewModel.getTestResult()
 
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        ErrorGraph(textParam.errorList)
+        ErrorGraph(testResult.errorList)
 
-        Text(textParam.wpm.toString())
+        Spacer(modifier = Modifier.height(Dimens.medium))
+
+        Info(testResult)
+
+        Spacer(modifier = Modifier.height(Dimens.medium))
 
         ButtonColumn(viewModel, onBack)
     }
@@ -42,45 +47,59 @@ private fun ButtonColumn(
     viewModel: MainViewModel,
     onBack: () -> Unit
 ) {
-    Column (
+    Column(
         modifier = Modifier.fillMaxWidth(),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        OutlinedButton(
-            onClick = {
-                viewModel.resetTypedKeyList()
-                onBack()
-            }
+        TextAndButton(
+            painter = painterResource(Res.drawable.refresh_24px),
+            contentDescription = stringResource(Res.string.refresh_icon),
+            text = stringResource(Res.string.restart_testing),
         ) {
-            Image(
-                painter = painterResource(Res.drawable.refresh_24px),
-                contentDescription = stringResource(Res.string.refresh_icon),
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
-            )
+            viewModel.reset()
+            onBack()
         }
 
-        OutlinedButton(
-            onClick = {
-                viewModel.getNewText()
-                onBack()
-            }
+        TextAndButton(
+            painter = painterResource(Res.drawable.arrow_forward_24px),
+            contentDescription = stringResource(Res.string.arrow_forward_icon),
+            text = stringResource(Res.string.next_text),
         ) {
-            Image(
-                painter = painterResource(Res.drawable.arrow_forward_24px),
-                contentDescription = stringResource(Res.string.arrow_forward_icon),
-                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
-            )
+            viewModel.reset()
+            onBack()
         }
     }
 }
 
+@Composable
+private fun Info(testResult: TestResult) {
+    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.large)) {
+        val style = MaterialTheme.typography.displaySmall
+
+        Text(
+            text = "${stringResource(Res.string.wpm)} ${testResult.wpm}",
+            style = style
+        )
+        Text(
+            text = "${stringResource(Res.string.accuracy)} ${testResult.accuracy}%",
+            style = style
+        )
+    }
+}
 
 @Composable
-private fun TextAndButton(painter: Painter, contentDescription: String, onClick: () -> Unit) {
+private fun TextAndButton(painter: Painter, contentDescription: String, text: String, onClick: () -> Unit) {
 
-    Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(Dimens.small)) {
-        Text("")
+    Row(
+        modifier = Modifier.width(Dimens.textAndButtonWidth),
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.SpaceBetween
+    ) {
+        Text(
+            text,
+            style = MaterialTheme.typography.displaySmall,
+        )
 
         OutlinedButton(
             onClick = onClick,

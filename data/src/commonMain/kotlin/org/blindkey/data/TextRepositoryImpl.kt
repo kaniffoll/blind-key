@@ -15,8 +15,8 @@ class TextRepositoryImpl(
 
     private val isInitialized = AtomicBoolean(false)
 
-    override suspend fun initDatabase(forceInit: Boolean) {
-        if (localDataSource.textsCount() == 0 || forceInit) {
+    private suspend fun initDatabase() {
+        if (localDataSource.textsCount() == 0) {
             localDataSource.saveTexts(remoteDataSource.getAllTexts().map { it.toEntity() })
             isInitialized.set(true)
         }

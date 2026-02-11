@@ -75,5 +75,11 @@ data class TestParam(
                 else -> throw IllegalArgumentException("Wrong string argument: $strValue")
             }
         }
+
+        sealed class Param(open val value: String) {
+            data class HasPunctuation(override val value: String) : Param(value)
+            data class Language(override val value: String) : Param(value)
+            data class Length(override val value: String) : Param(value)
+        }
     }
 }

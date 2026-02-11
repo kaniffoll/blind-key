@@ -10,8 +10,12 @@ import kotlinx.coroutines.launch
 import org.blindkey.domain.mappers.toThemeParam
 import org.blindkey.domain.model.ThemeParam
 import org.blindkey.domain.settings.AppSettings
+import org.blindkey.domain.usecase.OpenUrlUseCase
 
-class SettingsViewModel(private val settings: AppSettings): ViewModel() {
+class SettingsViewModel(
+    private val settings: AppSettings,
+    private val openUrlUseCase: OpenUrlUseCase,
+): ViewModel() {
     val theme: StateFlow<ThemeParam> =
         settings.theme
             .stateIn(
@@ -31,4 +35,6 @@ class SettingsViewModel(private val settings: AppSettings): ViewModel() {
             settings.updateLocalData()
         }
     }
+
+    fun openGitHub() = openUrlUseCase()
 }

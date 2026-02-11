@@ -4,11 +4,16 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.*
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
+import androidx.compose.ui.focus.focusRequester
+import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.zIndex
 import androidx.navigation3.runtime.NavKey
@@ -27,8 +32,16 @@ fun Test(
     viewModel: MainViewModel,
     navigateTo: (NavKey) -> Unit
 ) {
-    TopContent(viewModel = viewModel, navigateTo = navigateTo)
-    MainContent(viewModel = viewModel)
+    val isLoading by viewModel.isLoading.collectAsState()
+
+    if (isLoading) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
+    } else {
+        TopContent(viewModel = viewModel, navigateTo = navigateTo)
+        MainContent(viewModel = viewModel)
+    }
 }
 
 
@@ -37,6 +50,17 @@ private fun MainContent(viewModel: MainViewModel) {
     val interactionSource = remember { MutableInteractionSource() }
     val currentText by viewModel.currentText.collectAsState()
     val typedKeyList by viewModel.typedKeyList.collectAsState()
+    val dumpText by viewModel.dumpText.collectAsState()
+
+    var isFocused by remember { mutableStateOf(false) }
+    val focusRequester = remember { FocusRequester() }
+
+    TextField(
+        modifier = Modifier.size(Dimens.zero).focusRequester(focusRequester)
+            .onFocusChanged { isFocused = it.isFocused },
+        value = dumpText,
+        onValueChange = viewModel::onTextChange,
+    )
 
     Box(
         modifier = Modifier
@@ -45,16 +69,21 @@ private fun MainContent(viewModel: MainViewModel) {
             .clickable(
                 interactionSource = interactionSource,
                 indication = null
-            ) { viewModel.resetTypedKeyList() },
+            ) {
+                viewModel.reset()
+            },
         contentAlignment = Alignment.Center
     ) {
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            LessonText(currentText.content, typedKeyList) { key ->
-                viewModel.checkKey(key)
-            }
+            LessonText(
+                text = currentText.content,
+                typedKeyList = typedKeyList,
+                isFocused = isFocused,
+                focusRequester = focusRequester,
+            )
             OutlinedButton(onClick = { viewModel.getNewText() }) {
                 Image(
                     painterResource(Res.drawable.refresh_24px),
@@ -70,6 +99,7 @@ private fun MainContent(viewModel: MainViewModel) {
 @Composable
 private fun TopContent(viewModel: MainViewModel, navigateTo: (NavKey) -> Unit) {
     val isTestFinished by viewModel.isTestFinished.collectAsState()
+    val testParam by viewModel.testParam.collectAsState()
 
     LaunchedEffect(isTestFinished) {
         if (isTestFinished) {
@@ -91,10 +121,6 @@ private fun TopContent(viewModel: MainViewModel, navigateTo: (NavKey) -> Unit) {
             navigateTo(it ?: throw Exception("Unknown Navigation Key"))
         }
 
-        TestParams(
-            onHasPunctuationChange = { viewModel.changeHasPunctuation(hasPunctuationAsString = it) },
-            onLanguageChange = { viewModel.changeLanguage(it) },
-            onLengthChange = { viewModel.changeLength(it) },
-        )
+        TestParams(testParam, onChange = viewModel::changeTestParam)
     }
 }

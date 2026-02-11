@@ -20,43 +20,42 @@ import org.jetbrains.compose.resources.stringResource
 
 @Composable
 fun TestParams(
-    onHasPunctuationChange: (String) -> Unit,
-    onLanguageChange: (String) -> Unit,
-    onLengthChange: (String) -> Unit,
+    testParam: TestParam,
+    onChange: (TestParam.Companion.Param) -> Unit
 ) {
     FlowRow(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceEvenly,
     ) {
         LabelAndMenu(
-            initValue = TestParam.ALL_STR,
+            initValue = testParam.hasPunctuationAsString(),
             label = stringResource(Res.string.punctuation_label),
             TestParam.HAS_PUNCTUATION_YES,
             TestParam.HAS_PUNCTUATION_NO,
             TestParam.ALL_STR
         ) {
-            onHasPunctuationChange(it)
+            onChange(TestParam.Companion.Param.HasPunctuation(it))
         }
 
         LabelAndMenu(
-            initValue = TestParam.ALL_STR,
+            initValue = testParam.languageAsString(),
             label = stringResource(Res.string.language_label),
             Language.ENGLISH.value,
             Language.RUSSIAN.value,
             TestParam.ALL_STR
         ) {
-            onLanguageChange(it)
+            onChange(TestParam.Companion.Param.Language(it))
         }
 
         LabelAndMenu(
-            initValue = TestParam.ALL_STR,
+            initValue = testParam.lengthAsString(),
             label = stringResource(Res.string.length_label),
             Length.SMALL_NAME,
             Length.MEDIUM_NAME,
             Length.LARGE_NAME,
             TestParam.ALL_STR
         ) {
-            onLengthChange(it)
+            onChange(TestParam.Companion.Param.Length(it))
         }
     }
 }

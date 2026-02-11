@@ -8,6 +8,7 @@ import dev.gitlive.firebase.firestore.FirebaseFirestore
 import dev.gitlive.firebase.firestore.firestore
 import org.blindkey.data.AppSettingsImpl
 import org.blindkey.data.TextRepositoryImpl
+import org.blindkey.data.UrlOpenerImpl
 import org.blindkey.data.local.LocalDataSource
 import org.blindkey.data.remote.RemoteDataSource
 import org.blindkey.data.datastore.createDataStore
@@ -17,9 +18,12 @@ import org.blindkey.data.local.getDatabaseBuilder
 import org.blindkey.data.local.getRoomDatabase
 import org.blindkey.domain.repo.TextRepository
 import org.blindkey.domain.settings.AppSettings
+import org.blindkey.domain.uri.UrlOpener
 import org.blindkey.domain.usecase.AddTextUseCase
 import org.blindkey.domain.usecase.GetRandomTextUseCase
-import org.blindkey.domain.usecase.InitDatabaseUseCase
+import org.blindkey.domain.usecase.GetTestParamUseCase
+import org.blindkey.domain.usecase.OpenUrlUseCase
+import org.blindkey.domain.usecase.SaveTestParamUseCase
 import org.koin.dsl.module
 
 private val dataModule = module {
@@ -33,18 +37,20 @@ private val dataModule = module {
     factory<LocalDataSource> { LocalDataSource(get()) }
 
     single<DataStore<Preferences>> { createDataStore() }
+    factory<UrlOpener> { UrlOpenerImpl() }
 }
 
 private val repoModule = module {
     includes(dataModule)
     single<TextRepository> { TextRepositoryImpl(get(), get()) }
-    single<AppSettings> { AppSettingsImpl(get(), get()) }
+    single<AppSettings> { AppSettingsImpl(get(), get(), get()) }
 }
 
 val useCaseModule = module {
     includes(repoModule)
-    factory<InitDatabaseUseCase> { InitDatabaseUseCase(get()) }
     factory<GetRandomTextUseCase> { GetRandomTextUseCase(get()) }
-
     factory<AddTextUseCase> { AddTextUseCase(get()) }
+    factory<GetTestParamUseCase> { GetTestParamUseCase(get()) }
+    factory<SaveTestParamUseCase> { SaveTestParamUseCase(get()) }
+    factory<OpenUrlUseCase> { OpenUrlUseCase(get()) }
 }

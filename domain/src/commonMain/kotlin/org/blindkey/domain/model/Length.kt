@@ -3,7 +3,6 @@ package org.blindkey.domain.model
 sealed interface Length {
     val value: IntRange
 
-
     data object Small: Length {
         override val value: IntRange = SMALL_MIN..SMALL_MAX
     }

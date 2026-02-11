@@ -1,6 +1,5 @@
 package org.blindkey.data.local
 
-import androidx.room.AutoMigration
 import androidx.room.ConstructedBy
 import androidx.room.Database
 import androidx.room.RoomDatabase

@@ -62,5 +62,9 @@ fun Settings(
         OutlinedButton(onClick = { viewModel.updateLocalData() }) {
             Text(stringResource(Res.string.update_local))
         }
+
+        OutlinedButton(onClick = { viewModel.openGitHub() }) {
+            Text(stringResource(Res.string.open_github))
+        }
     }
 }
