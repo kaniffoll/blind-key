@@ -14,7 +14,7 @@
 ## Built With
 
 - [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) – shared code across desktop platforms
-- [Jetpack Compose Desktop](https://www.jetbrains.com/compose/) – modern UI framework for desktop applications
+- [Jetpack Compose Desktop](https://kotlinlang.org/docs/multiplatform/compose-multiplatform-and-jetpack-compose.html#jetpack-compose-and-composables) – modern UI framework for desktop applications
 - [Firebase Firestore](https://firebase.google.com/docs/firestore) – cloud database for storing user progress and texts
 
 ### Prerequisites
