@@ -1,4 +1,4 @@
-package org.blindkey.app.screens.result
+package org.blindkey.app.ui.test
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
@@ -11,10 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.painter.Painter
 import blind_key.sharedui.generated.resources.*
-import org.blindkey.app.components.ErrorGraph
+import org.blindkey.app.ui.components.ErrorGraph
 import org.blindkey.app.model.TestResult
 import org.blindkey.app.res.Dimens
-import org.blindkey.app.screens.test.MainViewModel
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -66,7 +65,7 @@ private fun ButtonColumn(
             contentDescription = stringResource(Res.string.arrow_forward_icon),
             text = stringResource(Res.string.next_text),
         ) {
-            viewModel.reset()
+            viewModel.getNewText()
             onBack()
         }
     }

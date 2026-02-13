@@ -1,11 +1,11 @@
-package org.blindkey.app.screens
+package org.blindkey.app.ui
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.tooling.preview.Preview
 import org.blindkey.app.navigation.root.NavigationRoot
-import org.blindkey.app.screens.settings.SettingsViewModel
+import org.blindkey.app.ui.settings.SettingsViewModel
 import org.blindkey.app.theme.AppTheme
 import org.koin.compose.viewmodel.koinViewModel
 

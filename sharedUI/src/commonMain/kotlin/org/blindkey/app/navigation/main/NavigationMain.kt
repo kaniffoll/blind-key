@@ -10,9 +10,9 @@ import androidx.savedstate.serialization.SavedStateConfiguration
 import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import org.blindkey.app.navigation.Route
-import org.blindkey.app.screens.result.Result
-import org.blindkey.app.screens.test.Test
-import org.blindkey.app.screens.test.MainViewModel
+import org.blindkey.app.ui.test.Result
+import org.blindkey.app.ui.test.Test
+import org.blindkey.app.ui.test.MainViewModel
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable

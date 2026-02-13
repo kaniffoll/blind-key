@@ -1,4 +1,4 @@
-package org.blindkey.app.screens.test
+package org.blindkey.app.ui.test
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
+import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -18,12 +19,12 @@ import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.zIndex
 import androidx.navigation3.runtime.NavKey
 import blind_key.sharedui.generated.resources.*
-import org.blindkey.app.components.LessonText
-import org.blindkey.app.components.TestParams
-import org.blindkey.app.components.TopBar
 import org.blindkey.app.model.IconInfo
 import org.blindkey.app.navigation.Route
 import org.blindkey.app.res.Dimens
+import org.blindkey.app.ui.components.LessonText
+import org.blindkey.app.ui.components.TestParams
+import org.blindkey.app.ui.components.TopBar
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.resources.stringResource
 
@@ -78,12 +79,15 @@ private fun MainContent(viewModel: MainViewModel) {
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            LessonText(
-                text = currentText.content,
-                typedKeyList = typedKeyList,
-                isFocused = isFocused,
-                focusRequester = focusRequester,
-            )
+            currentText?.let {
+                LessonText(
+                    text = it.content,
+                    typedKeyList = typedKeyList,
+                    isFocused = isFocused,
+                    focusRequester = focusRequester,
+                )
+            } ?: Text(stringResource(Res.string.no_content))
+
             OutlinedButton(onClick = { viewModel.getNewText() }) {
                 Image(
                     painterResource(Res.drawable.refresh_24px),
@@ -91,7 +95,6 @@ private fun MainContent(viewModel: MainViewModel) {
                     colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.secondary),
                 )
             }
-//        Button(onClick = { viewModel.addText() }) {}
         }
     }
 }

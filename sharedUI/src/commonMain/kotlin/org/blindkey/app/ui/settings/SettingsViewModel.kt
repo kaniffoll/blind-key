@@ -1,4 +1,4 @@
-package org.blindkey.app.screens.settings
+package org.blindkey.app.ui.settings
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

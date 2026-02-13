@@ -19,7 +19,6 @@ import org.blindkey.data.local.getRoomDatabase
 import org.blindkey.domain.repo.TextRepository
 import org.blindkey.domain.settings.AppSettings
 import org.blindkey.domain.uri.UrlOpener
-import org.blindkey.domain.usecase.AddTextUseCase
 import org.blindkey.domain.usecase.GetRandomTextUseCase
 import org.blindkey.domain.usecase.GetTestParamUseCase
 import org.blindkey.domain.usecase.OpenUrlUseCase
@@ -49,7 +48,6 @@ private val repoModule = module {
 val useCaseModule = module {
     includes(repoModule)
     factory<GetRandomTextUseCase> { GetRandomTextUseCase(get()) }
-    factory<AddTextUseCase> { AddTextUseCase(get()) }
     factory<GetTestParamUseCase> { GetTestParamUseCase(get()) }
     factory<SaveTestParamUseCase> { SaveTestParamUseCase(get()) }
     factory<OpenUrlUseCase> { OpenUrlUseCase(get()) }

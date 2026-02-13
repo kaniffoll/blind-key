@@ -1,4 +1,4 @@
-package org.blindkey.app.components
+package org.blindkey.app.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border

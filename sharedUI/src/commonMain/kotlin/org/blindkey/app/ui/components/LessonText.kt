@@ -1,4 +1,4 @@
-package org.blindkey.app.components
+package org.blindkey.app.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource

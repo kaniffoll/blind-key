@@ -1,4 +1,4 @@
-package org.blindkey.app.screens.settings
+package org.blindkey.app.ui.settings
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.MaterialTheme
@@ -11,8 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import blind_key.sharedui.generated.resources.*
-import org.blindkey.app.components.TextDropdownMenu
-import org.blindkey.app.components.TopBar
+import org.blindkey.app.ui.components.TextDropdownMenu
+import org.blindkey.app.ui.components.TopBar
 import org.blindkey.app.model.IconInfo
 import org.blindkey.app.res.Dimens
 import org.jetbrains.compose.resources.stringResource

@@ -13,7 +13,7 @@ import kotlinx.serialization.modules.SerializersModule
 import kotlinx.serialization.modules.polymorphic
 import org.blindkey.app.navigation.Route
 import org.blindkey.app.navigation.main.NavigationMain
-import org.blindkey.app.screens.settings.Settings
+import org.blindkey.app.ui.settings.Settings
 
 @Composable
 fun NavigationRoot(modifier: Modifier = Modifier) {

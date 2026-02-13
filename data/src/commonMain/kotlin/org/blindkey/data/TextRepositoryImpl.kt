@@ -22,14 +22,10 @@ class TextRepositoryImpl(
         }
     }
 
-    override suspend fun getRandomText(testParam: TestParam): Text {
+    override suspend fun getRandomText(testParam: TestParam): Text? {
         if (!isInitialized.get()) {
             initDatabase()
         }
-        return localDataSource.getRandomText(testParam) ?: Text("NO CONTENT", wordsCount = 2)
-    }
-
-    override suspend fun addText(text: HashMap<String, Any>) {
-        remoteDataSource.addNewText(text)
+        return localDataSource.getRandomText(testParam)
     }
 }

@@ -4,7 +4,5 @@ import org.blindkey.domain.model.TestParam
 import org.blindkey.domain.model.Text
 
 interface TextRepository {
-    suspend fun getRandomText(testParam: TestParam): Text
-
-    suspend fun addText(text: HashMap<String, Any>)
+    suspend fun getRandomText(testParam: TestParam): Text?
 }
