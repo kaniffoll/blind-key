@@ -4,18 +4,18 @@
 
 ## Features
 
-- Typing exercises and practice tests
+- Typing practice tests
 - Real-time speed and accuracy tracking
 - Support for multiple languages (English and Russian)
-- Randomized text and punctuation exercises
+- Randomized text exercises
 - Optional removal of punctuation for adaptive training
 - Cross-platform desktop support: Windows, macOS, Linux
 
 ## Built With
 
 - [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) – shared code across desktop platforms
-- [Jetpack Compose Desktop](https://www.jetbrains.com/compose/) – modern UI framework for desktop applications
-- [Firebase Firestore](https://firebase.google.com/docs/firestore) – cloud database for storing user progress and texts
+- [Jetpack Compose Desktop](https://kotlinlang.org/docs/multiplatform/compose-multiplatform-and-jetpack-compose.html#jetpack-compose-and-composables) – modern UI framework for desktop applications
+- [Firebase Firestore](https://firebase.google.com/docs/firestore) – cloud database for storing texts
 
 ### Prerequisites
 
