@@ -7,13 +7,6 @@ import okio.Path.Companion.toPath
 import org.blindkey.data.getLocalFilesDir
 import java.io.File
 
-//fun createDataStore(): DataStore<Preferences> = createDataStore(
-//    producePath = {
-//        val file =
-//        file.absolutePath
-//    }
-//)
-
 actual fun createDataStore(): DataStore<Preferences> {
     val file = File(getLocalFilesDir(), dataStoreFileName).absolutePath
     return PreferenceDataStoreFactory.createWithPath(

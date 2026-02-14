@@ -8,8 +8,9 @@ plugins {
 
 dependencies {
     implementation(project(":sharedUI"))
-    implementation(libs.firebase.bom)
+    implementation(libs.firebase.java.sdk)
     implementation(libs.firebase.firestore)
+    implementation(libs.firebase.app)
     implementation(libs.kermit)
 }
 
@@ -38,6 +39,14 @@ compose.desktop {
                 iconFile.set(project.file("appIcons/MacosIcon.icns"))
                 bundleID = "org.blindkey.app.blindkey"
             }
+
+            modules(
+                "java.sql",
+                "jdk.unsupported",
+                "java.naming",
+                "java.net.http",
+                "jdk.crypto.ec"
+            )
         }
     }
 }

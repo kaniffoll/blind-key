@@ -2,11 +2,12 @@ package utils
 
 import android.app.Application
 import co.touchlab.kermit.Logger
+import com.google.firebase.FirebaseOptions
 import com.google.firebase.FirebasePlatform
-import dev.gitlive.firebase.Firebase
-import dev.gitlive.firebase.FirebaseOptions
-import dev.gitlive.firebase.initialize
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.ktx.initialize
 import res.FireStoreRes
+
 
 fun initFireStore() {
 
@@ -27,11 +28,18 @@ fun initFireStore() {
 
     })
 
-    val options = FirebaseOptions(
-        projectId = FireStoreRes.PROJECT_ID,
-        applicationId = FireStoreRes.APP_ID,
-        apiKey = FireStoreRes.API_KEY,
-    )
+    val options = FirebaseOptions.Builder()
+        .setProjectId(FireStoreRes.PROJECT_ID)
+        .setApplicationId(FireStoreRes.APP_ID)
+        .setApiKey(FireStoreRes.API_KEY)
+        .build()
+//        projectId = FireStoreRes.PROJECT_ID,
+//        applicationId = FireStoreRes.APP_ID,
+//        apiKey = FireStoreRes.API_KEY,
+//    )
 
-    Firebase.initialize(Application(), options)
+    Firebase.initialize(
+        context = Application(),
+        options = options
+    )
 }

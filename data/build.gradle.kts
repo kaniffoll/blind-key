@@ -10,7 +10,7 @@ kotlin {
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.firebase.bom)
+            //implementation(libs.firebase.bom)
             implementation(libs.firebase.firestore)
             implementation(project(":domain"))
             implementation(libs.kotlinx.serialization)

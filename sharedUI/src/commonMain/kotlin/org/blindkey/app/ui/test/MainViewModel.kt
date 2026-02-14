@@ -95,7 +95,9 @@ class MainViewModel(
         totalTime = null
         _isTestFinished.value = false
         _dumpText.value = ""
-        errList = MutableList(_currentText.value!!.content.count()) { 0 }
+        errList = _currentText.value?.let {
+            MutableList(it.content.count()) { 0 }
+        } ?: mutableListOf()
     }
 
     fun getNewText() {
