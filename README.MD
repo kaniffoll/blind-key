@@ -14,8 +14,9 @@
 ## Built With
 
 - [Kotlin Multiplatform](https://kotlinlang.org/docs/multiplatform.html) – shared code across desktop platforms
-- [Jetpack Compose Desktop](https://kotlinlang.org/docs/multiplatform/compose-multiplatform-and-jetpack-compose.html#jetpack-compose-and-composables) – modern UI framework for desktop applications
+- [Compose Multiplatform](https://kotlinlang.org/compose-multiplatform/) – modern UI framework for kmp applications
 - [Firebase Firestore](https://firebase.google.com/docs/firestore) – cloud database for storing texts
+- [Room Database](https://developer.android.com/kotlin/multiplatform/room) - local database for storing texts
 
 ### Prerequisites
 
