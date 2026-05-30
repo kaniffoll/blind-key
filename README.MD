@@ -1,6 +1,6 @@
 # BlindKey
 
-**BlindKey** is a cross-platform touch typing trainer designed for users to improve their typing speed and accuracy, with a focus on accessibility. It is specifically tailored to help users practice blind typing efficiently.
+**BlindKey** is a multiplatform touch typing trainer designed for users to improve their typing speed and accuracy, with a focus on accessibility. It is specifically tailored to help users practice blind typing efficiently.
 
 ## Features
 
